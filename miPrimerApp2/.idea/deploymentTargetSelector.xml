@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-01-29T04:37:03.053468800Z">
+        <DropdownSelection timestamp="2026-02-05T15:29:56.742697100Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=RF8R814XZPM" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\ccjun\.android\avd\tiqui.avd" />
             </handle>
           </Target>
         </DropdownSelection>
