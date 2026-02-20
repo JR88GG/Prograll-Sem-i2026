@@ -31,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
         tbh = findViewById(R.id.tbhConversores);
         tbh.setup();
 
-        tbh.addTab(tbh.newTabSpec("Monedas").setContent(R.id.tabMonedas).setIndicator("MONEDAS",getResources().getDrawable(R.drawable.coin)));
-        tbh.addTab(tbh.newTabSpec("Longitud").setContent(R.id.tabLongitud).setIndicator("LONGITUD",getResources().getDrawable(R.drawable.lenght)));
-        tbh.addTab(tbh.newTabSpec("Volumen").setContent(R.id.tabVolumen).setIndicator("VOLUMEN", getResources().getDrawable(R.drawable.medida_de_volumen)));
-        tbh.addTab(tbh.newTabSpec("Masa").setContent(R.id.tabMasa).setIndicator("MASA",getResources().getDrawable(R.drawable.balance) ));
+        tbh.addTab(tbh.newTabSpec("Monedas").setContent(R.id.tabMonedas).setIndicator("", getDrawable(R.drawable.coin)));
+        tbh.addTab(tbh.newTabSpec("Longitud").setContent(R.id.tabLongitud).setIndicator("", getResources().getDrawable(R.drawable.lenght)));
+        tbh.addTab(tbh.newTabSpec("Volumen").setContent(R.id.tabVolumen).setIndicator("", getDrawable(R.drawable.medida_de_volumen)));
+        tbh.addTab(tbh.newTabSpec("Masa").setContent(R.id.tabMasa).setIndicator("", getDrawable(R.drawable.balance)));
 
         btn = findViewById(R.id.btnMonedasConvertir);
         btn.setOnClickListener(v->convertirMonedas());
