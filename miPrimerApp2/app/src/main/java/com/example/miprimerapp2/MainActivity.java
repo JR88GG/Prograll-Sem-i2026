@@ -1,5 +1,10 @@
 package com.example.miprimerapp2;
 
+import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,74 +24,60 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity extends AppCompatActivity {
 
     TextView tempVal;
-    Spinner spn;
-    Button btn;
-    Double valores[][] = {
-            {1.0, 0.85, 7.67, 26.42, 36.80, 495.77}, //moendas
-            {1.0, 1000.0, 100.0, 39.3701, 3.280841666667, 1.1963081929167, 1.09361}, //longitud
-            {}, //volumen
-    };
-    String[][] etiquetas = {
-            {"Dolar", "Euro", "Quetzal", "Lempira", "Cordoba", "Colon CR"}, //monedas
-            {"Mts", "Ml", "Cm", "Pulgada", "Pies", "Vara", "Yarda"}, //Longitud
-            {""},  //volumen
-    };
+    SensorManager sensorManager;
+    Sensor sensor;
+    SensorEventListener sensorEventListener;
+
+    @Override
+    protected void onPause() {
+        detener();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        iniciar();
+        super.onResume();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        btn = findViewById(R.id.btnConvertir);
-        btn.setOnClickListener(v->convertir());
-
-        cambiarEtiqueta(0);//valores predeterminaods
-
-        spn = findViewById(R.id.spnTipo);
-        spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        sensorProximidad();
+    }
+    private void iniciar(){
+        sensorManager.registerListener(sensorEventListener, sensor, 2000*1000);
+    }
+    private void detener(){
+        sensorManager.unregisterListener(sensorEventListener);
+    }
+    private void sensorProximidad(){
+        tempVal = findViewById(R.id.lblSensorProximidad);
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        if(sensor==null){
+            tempVal.setText("No dispones del sensor de proximidad");
+            finish();
+        }
+        sensorEventListener = new SensorEventListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                cambiarEtiqueta(i);
+            public void onSensorChanged(SensorEvent sensorEvent) {
+                double valor = sensorEvent.values[0];
+                tempVal.setText("Prxomidad: "+ valor);
+                int color = Color.BLACK;
+                if(valor<=4){
+                    color = Color.WHITE;
+                }
+                getWindow().getDecorView().setBackgroundColor(color);
             }
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onAccuracyChanged(Sensor sensor, int i) {
 
             }
-        });
+        };
     }
-    private void cambiarEtiqueta(int posicion){
-        ArrayAdapter<String> aaEtiquetas = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_spinner_item,
-                etiquetas[posicion]
-        );
-        aaEtiquetas.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spn = findViewById(R.id.spnDe);
-        spn.setAdapter(aaEtiquetas);
 
-        spn = findViewById(R.id.spnA);
-        spn.setAdapter(aaEtiquetas);
-    }
-    private void convertir(){
-        spn = findViewById(R.id.spnTipo);
-        int tipo = spn.getSelectedItemPosition();
-
-        spn = findViewById(R.id.spnDe);
-        int de = spn.getSelectedItemPosition();
-
-        spn = findViewById(R.id.spnA);
-        int a = spn.getSelectedItemPosition();
-
-        tempVal = findViewById(R.id.txtCantidad);
-        double cantidad = Double.parseDouble(tempVal.getText().toString());
-        double respuesta = conversor(tipo, de, a, cantidad);
-
-        tempVal = findViewById(R.id.lblRespuesta);
-        tempVal.setText("Respuesta: "+ respuesta);
-    }
-    double conversor(int tipo, int de, int a, double cantidad){
-        return valores[tipo][a]/valores[tipo][de] * cantidad;
-    }
 
 }
 
