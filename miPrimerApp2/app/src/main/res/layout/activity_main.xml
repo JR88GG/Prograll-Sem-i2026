@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/lblSensorluz"
+        android:id="@+id/lblSensorAcelerometro"
         android:text="Proximidad: "
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
