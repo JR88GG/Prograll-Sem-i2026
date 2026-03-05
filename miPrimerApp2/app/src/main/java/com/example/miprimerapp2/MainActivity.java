@@ -2,6 +2,7 @@ package com.example.miprimerapp2;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TabHost;
@@ -15,12 +16,22 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
+    double valor;
     TabHost tbh;
     TextView tempVal;
+    EditText txt;
     Spinner spn;
     Button btn;
-    Double monedas[] = new Double[] {1.0, 0.85, 7.67, 26.42, 36.80, 495.77};
-    Double longitud[] = new Double[] {1.0, 1000.0, 100.0, 39.3701, 3.280841666667, 1.1963081929167, 1.09361};
+
+    Double Area[] = new Double[] {
+            1.0,
+            0.13295,
+            0.11111,
+            0.09290,
+            0.0002127,
+            0.00001329,
+            0.00000929
+    };
 
 
     @Override
@@ -31,30 +42,48 @@ public class MainActivity extends AppCompatActivity {
         tbh = findViewById(R.id.tbhConversores);
         tbh.setup();
 
-        tbh.addTab(tbh.newTabSpec("Monedas").setContent(R.id.tabMonedas).setIndicator("", getDrawable(R.drawable.coin)));
-        tbh.addTab(tbh.newTabSpec("Longitud").setContent(R.id.tabLongitud).setIndicator("", getResources().getDrawable(R.drawable.lenght)));
-        tbh.addTab(tbh.newTabSpec("Volumen").setContent(R.id.tabVolumen).setIndicator("", getDrawable(R.drawable.medida_de_volumen)));
-        tbh.addTab(tbh.newTabSpec("Masa").setContent(R.id.tabMasa).setIndicator("", getDrawable(R.drawable.balance)));
+        tbh.addTab(tbh.newTabSpec("Monedas").setContent(R.id.tabArea).setIndicator("", getDrawable(R.drawable.medida_de_volumen)));
+        tbh.addTab(tbh.newTabSpec("Longitud").setContent(R.id.tabAgua).setIndicator("", getResources().getDrawable(R.drawable.medida_de_volumen)));
+
 
         btn = findViewById(R.id.btnMonedasConvertir);
         btn.setOnClickListener(v->convertirMonedas());
 
         btn = findViewById(R.id.btnLongitudConvertir);
-        btn.setOnClickListener(v->convertirLongitud());
+        btn.setOnClickListener(v->convertirAgua());
+
+
     }
-    private void convertirLongitud(){
-        spn = findViewById(R.id.spnLongitudDe);
-        int de = spn.getSelectedItemPosition();
 
-        spn = findViewById(R.id.spnLongitudA);
-        int a = spn.getSelectedItemPosition();
+    private void convertirAgua(){
 
-        tempVal = findViewById(R.id.txtLongitudCantidad);
-        double cantidad = Double.parseDouble(tempVal.getText().toString());
-        double respuesta = conversorLongitud(de, a, cantidad);
+        txt = findViewById(R.id.txtAguaConsumo);
+        String texto = txt.getText().toString();
 
-        tempVal = findViewById(R.id.lblLongitudRespuesta);
-        tempVal.setText("Respuesta: "+ respuesta);
+        if(texto.isEmpty()){
+            return;
+        }
+
+        valor = Double.parseDouble(texto);
+
+        if (valor >= 1 && valor <= 18){
+            tempVal = findViewById(R.id.lblaguaRespuesta);
+            tempVal.setText("Respuesta: $6");
+        }else
+        if (valor >= 19 && valor <= 28){
+            tempVal = findViewById(R.id.lblaguaRespuesta);
+            valor = ((valor -18)*0.45)+6;
+            tempVal.setText("Respuesta:$"+ valor);
+        }else
+        if (valor >= 29){
+            tempVal = findViewById(R.id.lblaguaRespuesta);
+            valor = ((valor -28)*0.65)+6+4.5;
+            tempVal.setText("Respuesta:$"+valor);
+        }else  if (valor <=0){
+            tempVal = findViewById(R.id.lblaguaRespuesta);
+            tempVal.setText("Respuesta:Valor invalido");}
+
+
     }
     private void convertirMonedas(){
         spn = findViewById(R.id.spnMonedasDe);
@@ -71,10 +100,8 @@ public class MainActivity extends AppCompatActivity {
         tempVal.setText("Respuesta: "+ respuesta);
     }
     double conversor(int de, int a, double cantidad){
-        return monedas[a]/monedas[de] * cantidad;
+        return Area[a]/Area[de] * cantidad;
     }
-    double conversorLongitud(int de, int a, double cantidad){
-        return longitud[a]/longitud[de] * cantidad;
-    }
-
 }
+
+

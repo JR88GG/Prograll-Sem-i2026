@@ -28,62 +28,44 @@
                 android:layout_height="match_parent">
 
                 <RelativeLayout
-                    android:id="@+id/tabLongitud"
+                    android:id="@+id/tabAgua"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/lblLongitudDe"
-                        android:text="DE:"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginLeft="20dp"
+                        android:id="@+id/lblAgua"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <Spinner
-                        android:id="@+id/spnLongitudDe"
-                        android:entries="@array/longitud"
-                        android:layout_marginLeft="60dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:id="@+id/lblLongitudA"
-                        android:text="A:"
-                        android:layout_marginTop="80dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <Spinner
-                        android:id="@+id/spnLongitudA"
-                        android:entries="@array/longitud"
-                        android:layout_marginLeft="60dp"
-                        android:layout_marginTop="80dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="Calculo de tarifa de agua:" />
+
                     <EditText
-                        android:id="@+id/txtLongitudCantidad"
-                        android:layout_marginTop="120dp"
-                        android:hint="Cantidad a convertir"
+                        android:id="@+id/txtAguaConsumo"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="80dp"
+                        android:hint="Mts consumidos" />
+
                     <TextView
-                        android:id="@+id/lblLongitudRespuesta"
-                        android:layout_marginTop="180dp"
-                        android:layout_marginLeft="20dp"
-                        android:text="Respuesta: ?"
+                        android:id="@+id/lblaguaRespuesta"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="180dp"
+                        android:text="Respuesta: ?" />
+
                     <Button
                         android:id="@+id/btnLongitudConvertir"
-                        android:layout_marginTop="240dp"
-                        android:text="CONVERTIR"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="240dp"
+                        android:text="CONVERTIR" />
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/tabMonedas"
+                    android:id="@+id/tabArea"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
@@ -134,21 +116,6 @@
                         android:text="CONVERTIR"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/tabVolumen"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                </RelativeLayout>
-                <RelativeLayout
-                    android:id="@+id/tabMasa"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
                 </RelativeLayout>
             </FrameLayout>
         </LinearLayout>
