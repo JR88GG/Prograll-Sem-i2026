@@ -1,11 +1,5 @@
 <resources>
-    <string name="app_name">Calculador Basica</string>
-    <string-array name="opciones">
-        <item>suma</item>
-        <item>resta</item>
-        <item>multiplicación</item>
-        <item>Division</item>
+    <string name="app_name">Sqlite prueva</string>
 
-    </string-array>
 
 </resources>
