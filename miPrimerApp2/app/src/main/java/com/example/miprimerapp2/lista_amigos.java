@@ -72,7 +72,7 @@ public class lista_amigos extends AppCompatActivity {
             }
             return true;
         }catch (Exception e){
-            mostrarMsg("Error al seleccionar un item del menu:"+e.getMessage());
+            mostrarMsg("Error al 5seleccionar un item del menu:"+e.getMessage());
             return super.onContextItemSelected(item);
 
         }
