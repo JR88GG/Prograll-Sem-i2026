@@ -41,6 +41,8 @@ public class lista_amigos extends AppCompatActivity {
     JSONObject jsonObject;
     int posicion = 0;
     amigos misAmigos;
+    DetectarInternet di;
+    ObtenerDatosServidor datosServidor;
 
 
     @Override
@@ -157,24 +159,32 @@ public class lista_amigos extends AppCompatActivity {
     }
     private void obtenerAmigos(){
         try{
-            cAmigos = db.lista_amigos();
-            if( cAmigos.moveToFirst() ){
-                jsonArray = new JSONArray();
-                do{
-                    jsonObject = new JSONObject();
-                    jsonObject.put("idAmigo", cAmigos.getString(0));
-                    jsonObject.put("nombre", cAmigos.getString(1));
-                    jsonObject.put("direccion", cAmigos.getString(2));
-                    jsonObject.put("telefono", cAmigos.getString(3));
-                    jsonObject.put("email", cAmigos.getString(4));
-                    jsonObject.put("dui", cAmigos.getString(5));
-                    jsonObject.put("foto", cAmigos.getString(6));
-                    jsonArray.put(jsonObject);
-                }while (cAmigos.moveToNext());
+            if(di.hayConexionInternet()){//si hay conexion a internet
+                datosServidor = new ObtenerDatosServidor();
+                String respuesta = datosServidor.execute().get();
+                jsonObject = new JSONObject(respuesta);
+                jsonArray = jsonObject.getJSONArray("rows");
                 mostrarAmigos();
-            }else{
-                mostrarMsg("No hay amigos que mostrar");
-                abrirActivity();
+            }else {//no hay conexion a internet
+                cAmigos = db.lista_amigos();
+                if (cAmigos.moveToFirst()) {
+                    jsonArray = new JSONArray();
+                    do {
+                        jsonObject = new JSONObject();
+                        jsonObject.put("idAmigo", cAmigos.getString(0));
+                        jsonObject.put("nombre", cAmigos.getString(1));
+                        jsonObject.put("direccion", cAmigos.getString(2));
+                        jsonObject.put("telefono", cAmigos.getString(3));
+                        jsonObject.put("email", cAmigos.getString(4));
+                        jsonObject.put("dui", cAmigos.getString(5));
+                        jsonObject.put("foto", cAmigos.getString(6));
+                        jsonArray.put(jsonObject);
+                    } while (cAmigos.moveToNext());
+                    mostrarAmigos();
+                } else {
+                    mostrarMsg("No hay amigos que mostrar");
+                    abrirActivity();
+                }
             }
         } catch (Exception e) {
             mostrarMsg(e.getMessage());
@@ -188,7 +198,7 @@ public class lista_amigos extends AppCompatActivity {
                 alAmigosCopia.clear();
 
                 for (int i=0; i<jsonArray.length();i++) {
-                    jsonObject = jsonArray.getJSONObject(i);
+                    jsonObject = jsonArray.getJSONObject(i).getJSONObject("value");
                     misAmigos = new amigos(
                             jsonObject.getString("idAmigos"),
                             jsonObject.getString("nombre"),
